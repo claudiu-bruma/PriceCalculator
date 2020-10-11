@@ -1,7 +1,11 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using PriceCalculator.Controllers.Models;
 using PriceCalculator.Services;
+using PriceCalculator.Services.PriceCalculationServices;
+using PriceCalculator.Services.VarRateValidators;
+using System.Net;
 
 namespace PriceCalculator.Controllers
 {
@@ -10,10 +14,13 @@ namespace PriceCalculator.Controllers
     public class PriceCalculatorController : ControllerBase
     {
         private IPriceCalculationService _priceCalculationService;
+        private IVatRateValidator _vatRateValidator;
         private readonly IMapper _mapper;
-        public PriceCalculatorController(IPriceCalculationService priceCalculationService, IMapper mapper)
+        public PriceCalculatorController(
+            IPriceCalculationService priceCalculationService, IVatRateValidator vatRateValidator, IMapper mapper)
         {
             _priceCalculationService = priceCalculationService;
+            _vatRateValidator = vatRateValidator;
             _mapper = mapper;
         }
         /// <summary>
@@ -27,6 +34,10 @@ namespace PriceCalculator.Controllers
             if (!ModelState.IsValid)
             {
                 return new BadRequestObjectResult(ModelState);
+            }
+            if (!_vatRateValidator.IsValidVatRate(priceDetails.VatRate))
+            {
+                return StatusCode(StatusCodes.Status451UnavailableForLegalReasons, $"Vat rate {priceDetails.VatRate} is not a legally valid vat rate ");
             }
             var priceDetailsDto = _mapper.Map<PriceDetails>(priceDetails);
             _priceCalculationService.FillInPrices(priceDetailsDto);

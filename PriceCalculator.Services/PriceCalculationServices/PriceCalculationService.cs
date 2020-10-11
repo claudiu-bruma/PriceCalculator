@@ -1,7 +1,7 @@
 ﻿using PriceCalculator.Services.PriceCalculationStrategy;
 using System;
 
-namespace PriceCalculator.Services
+namespace PriceCalculator.Services.PriceCalculationServices
 {
     public class PriceCalculationService : IPriceCalculationService
     {

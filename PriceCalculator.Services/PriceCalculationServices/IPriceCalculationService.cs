@@ -1,4 +1,4 @@
-﻿namespace PriceCalculator.Services
+﻿namespace PriceCalculator.Services.PriceCalculationServices
 {
     public interface IPriceCalculationService
     {

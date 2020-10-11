@@ -3,8 +3,9 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
-using PriceCalculator.Services;
+using Microsoft.Extensions.Hosting; 
+using PriceCalculator.Services.PriceCalculationServices;
+using PriceCalculator.Services.VarRateValidators;
 
 namespace PriceCalculator
 {
@@ -21,6 +22,7 @@ namespace PriceCalculator
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddAutoMapper(typeof(Startup));
+            services.AddScoped<IVatRateValidator, AustianVatRateValidator>();
             services.AddScoped<IPriceCalculationService, PriceCalculationService>();
             services.AddControllers();
             services.AddSwaggerGen();

@@ -1,5 +1,5 @@
 using Moq;
-using PriceCalculator.Services;
+using PriceCalculator.Services.PriceCalculationServices;
 using System;
 using Xunit;
 
@@ -7,8 +7,11 @@ namespace PriceCalculator.Services.Tests
 {
     public class PriceCalculationServiceTests
     {
+        private MockRepository _mockRepository;
+        
         public PriceCalculationServiceTests()
         {
+            _mockRepository = new MockRepository(MockBehavior.Strict);
         }
 
         private PriceCalculationService CreateService()
@@ -53,6 +56,7 @@ namespace PriceCalculator.Services.Tests
             Assert.Equal(expectedNet, details.NetAmount);
             Assert.Equal(expectedGross, details.GrossAmount);
             Assert.Equal(expectedVatAmount, details.VatAmount);
+            _mockRepository.VerifyAll();
         }
         [Theory]
         [InlineData(0,0,0,10)]
@@ -93,6 +97,7 @@ namespace PriceCalculator.Services.Tests
             // Act and Assert
             Assert.Throws<ArgumentException>(()=> service.FillInPrices(
                 details));
+            _mockRepository.VerifyAll();
         }
 
         [Theory]
@@ -115,6 +120,7 @@ namespace PriceCalculator.Services.Tests
             // Act and Assert
             Assert.Throws<ArgumentOutOfRangeException>(() => service.FillInPrices(
                 details));
+            _mockRepository.VerifyAll();
         }         
     }
 }
