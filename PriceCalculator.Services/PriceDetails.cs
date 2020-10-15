@@ -2,9 +2,15 @@
 {
     public class PriceDetails
     {
-        public decimal? NetAmount { get; set; }
-        public decimal? GrossAmount { get; set; }
-        public decimal? VatAmount { get; set; }
-        public decimal VatRate { get; set; }
+        public decimal NetAmount { get; }
+        public decimal GrossAmount { get; }
+        public decimal VatAmount { get; }
+
+        public PriceDetails(decimal netAmount, decimal grossAmount, decimal vatAmount)
+        {
+            NetAmount = netAmount;
+            GrossAmount = grossAmount;
+            VatAmount = vatAmount;
+        }
     }
 }

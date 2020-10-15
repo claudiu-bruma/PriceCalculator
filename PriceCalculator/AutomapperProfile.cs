@@ -8,8 +8,8 @@ namespace PriceCalculator
     {
         public AutomapperProfile()
         {
-            CreateMap<PriceDetailsRequest, PriceDetails>();
-            CreateMap<PriceDetails, PriceDetailsResponse>();
+            CreateMap<PriceDetailsRequest, PriceDetailsInput>();
+            CreateMap<PriceDetailsInput, PriceDetailsResponse>();
         }
     }
 }

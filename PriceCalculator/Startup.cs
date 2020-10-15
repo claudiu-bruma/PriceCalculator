@@ -1,9 +1,11 @@
 using AutoMapper;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Routing;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting; 
+using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
 using PriceCalculator.Services.PriceCalculationServices;
 using PriceCalculator.Services.VarRateValidators;
 
@@ -24,7 +26,14 @@ namespace PriceCalculator
             services.AddAutoMapper(typeof(Startup));
             services.AddScoped<IVatRateValidator, AustianVatRateValidator>();
             services.AddScoped<IPriceCalculationService, PriceCalculationService>();
+            services.AddLogging(config =>
+            {
+                config.AddDebug();
+                config.AddConsole(); 
+                //etc
+            });
             services.AddControllers();
+
             services.AddSwaggerGen();
         }
 

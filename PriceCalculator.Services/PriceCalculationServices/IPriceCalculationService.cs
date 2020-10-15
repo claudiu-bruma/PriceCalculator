@@ -2,6 +2,6 @@
 {
     public interface IPriceCalculationService
     {
-        void FillInPrices(PriceDetails details);
+        PriceDetails GetCalculatedPrice(PriceDetailsInput details);
     }
 }
