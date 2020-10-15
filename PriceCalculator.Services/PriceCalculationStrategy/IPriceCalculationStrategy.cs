@@ -2,6 +2,6 @@
 {
     public interface IPriceCalculationStrategy
     {
-        void Calculate(PriceDetails details);
+        PriceDetails Calculate(PriceDetailsInput details);
     }
 }

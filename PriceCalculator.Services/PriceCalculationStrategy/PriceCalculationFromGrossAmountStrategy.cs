@@ -2,9 +2,9 @@
 
 namespace PriceCalculator.Services.PriceCalculationStrategy
 {
-    public class PriceCalculationFromGrossAmount : IPriceCalculationStrategy
+    public class PriceCalculationFromGrossAmountStrategy : IPriceCalculationStrategy
     {
-        public void Calculate(PriceDetails details)
+        public PriceDetails Calculate(PriceDetailsInput details)
         {
             if (!details.GrossAmount.HasValue)
             {
@@ -15,8 +15,10 @@ namespace PriceCalculator.Services.PriceCalculationStrategy
                 throw new ArgumentOutOfRangeException(nameof(details.VatRate));
             }
             
-            details.NetAmount = details.GrossAmount * 100 / (100 + details.VatRate);
-            details.VatAmount = details.NetAmount * details.VatRate / 100;
+            var netAmount = details.GrossAmount.Value * 100 / (100 + details.VatRate);
+            var vatAmount = netAmount * details.VatRate / 100;
+
+            return new PriceDetails(netAmount, details.GrossAmount.Value, vatAmount);
         }
     }
 

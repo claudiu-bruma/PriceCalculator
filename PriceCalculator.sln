@@ -7,7 +7,12 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PriceCalculator.Web", "Pric
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PriceCalculator.Services", "PriceCalculator.Services\PriceCalculator.Services.csproj", "{1AFBE0C3-85EF-4C88-8C0C-F8B2A849006A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PriceCalculator.Services.Tests", "PriceCalculator.Services.Tests\PriceCalculator.Services.Tests.csproj", "{BE72D77B-2A9D-428B-87BB-554A1699B946}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PriceCalculator.Services.Tests", "PriceCalculator.Services.Tests\PriceCalculator.Services.Tests.csproj", "{BE72D77B-2A9D-428B-87BB-554A1699B946}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{D55A57A1-0F30-401B-8F89-1B3AC9FC9AEA}"
+	ProjectSection(SolutionItems) = preProject
+		README.md = README.md
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

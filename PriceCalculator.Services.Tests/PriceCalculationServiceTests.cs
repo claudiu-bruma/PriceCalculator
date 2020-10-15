@@ -1,3 +1,4 @@
+using Microsoft.Extensions.Logging;
 using Moq;
 using PriceCalculator.Services.PriceCalculationServices;
 using System;
@@ -16,7 +17,8 @@ namespace PriceCalculator.Services.Tests
 
         private PriceCalculationService CreateService()
         {
-            return new PriceCalculationService();
+            var logger = new Mock<ILogger<PriceCalculationService>>();
+            return new PriceCalculationService(logger.Object);
         }
 
         [Theory]
@@ -39,7 +41,7 @@ namespace PriceCalculator.Services.Tests
         {
             // Arrange
             var service = CreateService();
-            PriceDetails details = new PriceDetails()
+            PriceDetailsInput details = new PriceDetailsInput()
             {
                 NetAmount = netAmountInput,
                 GrossAmount= grossAmountInput,
@@ -48,14 +50,14 @@ namespace PriceCalculator.Services.Tests
             };
 
             // Act
-            service.FillInPrices(
+            var calculatedPrice= service.GetCalculatedPrice(
                 details);
 
             // Assert
 
-            Assert.Equal(expectedNet, details.NetAmount);
-            Assert.Equal(expectedGross, details.GrossAmount);
-            Assert.Equal(expectedVatAmount, details.VatAmount);
+            Assert.Equal(expectedNet, calculatedPrice.NetAmount);
+            Assert.Equal(expectedGross, calculatedPrice.GrossAmount);
+            Assert.Equal(expectedVatAmount, calculatedPrice.VatAmount);
             _mockRepository.VerifyAll();
         }
         [Theory]
@@ -86,7 +88,7 @@ namespace PriceCalculator.Services.Tests
         {
             // Arrange
             var service = CreateService();
-            PriceDetails details = new PriceDetails()
+            PriceDetailsInput details = new PriceDetailsInput()
             {
                 NetAmount = netAmountInput,
                 GrossAmount = grossAmountInput,
@@ -95,7 +97,7 @@ namespace PriceCalculator.Services.Tests
             };
 
             // Act and Assert
-            Assert.Throws<ArgumentException>(()=> service.FillInPrices(
+            Assert.Throws<ArgumentException>(()=> service.GetCalculatedPrice(
                 details));
             _mockRepository.VerifyAll();
         }
@@ -109,7 +111,7 @@ namespace PriceCalculator.Services.Tests
         {
             // Arrange
             var service = CreateService();
-            PriceDetails details = new PriceDetails()
+            PriceDetailsInput details = new PriceDetailsInput()
             {
                 NetAmount = netAmountInput,
                 GrossAmount = grossAmountInput,
@@ -118,7 +120,7 @@ namespace PriceCalculator.Services.Tests
             };
 
             // Act and Assert
-            Assert.Throws<ArgumentOutOfRangeException>(() => service.FillInPrices(
+            Assert.Throws<ArgumentOutOfRangeException>(() => service.GetCalculatedPrice(
                 details));
             _mockRepository.VerifyAll();
         }         
